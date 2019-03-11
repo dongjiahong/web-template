@@ -17,7 +17,7 @@
         <i-col span="4">
           <strong>文件名:</strong>
         </i-col>
-        <i-col span="20">{{media.name}}</i-col>
+        <i-col span="20">{{media.file_name}}</i-col>
       </Row>
       <Row>
         <i-col span="4">
@@ -30,6 +30,12 @@
           <strong>描 述:</strong>
         </i-col>
         <i-col span="20">{{media.description}}</i-col>
+      </Row>
+      <Row>
+        <i-col span="4">
+          <strong>使用次数:</strong>
+        </i-col>
+        <i-col span="20">{{media.use_num}}</i-col>
       </Row>
       <Row>
         <i-col span="4">
@@ -53,7 +59,7 @@
         <i-col span="4">
           <strong>素材链接:</strong>
         </i-col>
-        <i-col span="20">{{media.url}}</i-col>
+        <i-col span="20"><a :href="media.url" target="view_window">{{media.url}}</a></i-col>
       </Row>
       <Row>
         <i-col span="4">
@@ -61,6 +67,8 @@
         </i-col>
         <i-col span="20">{{media.ts}}</i-col>
       </Row>
+      <Divider></Divider>
+      <Button type="error" @click="deleteMedia">删除素材</Button>
     </Drawer>
     <Card style="width:250px; height:250px">
       <Checkbox v-model="single" slot="title" @on-change="change">
@@ -90,26 +98,18 @@ export default {
   data() {
     return {
       showDrawer: false,
-      // media: {
-      //   id: 0,
-      //   name: '',
-      //   tile: '',
-      //   description: '',
-      //   video_or_pic: '',
-      //   media_type: '',
-      //   media_tag: '',
-      //   url: '',
-      //   ts: '',
-      // },
-      single: false
+      single: false // 控制是否被选
     };
   },
   methods: {
-    change() {
-      this.$emit("selectCallback", this.media); // 将消息上传给父组件，调用父组件的callback
+    change(sel) {
+      this.$emit("selectCallback", this.media, sel); // 将消息上传给父组件，调用父组件的callback, 选中时sel是true，取消是false
     },
     showDetail() {
       this.showDrawer = true;
+    },
+    deleteMedia() {
+      // TODO
     }
   }
 };

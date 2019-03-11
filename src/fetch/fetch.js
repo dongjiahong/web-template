@@ -1,15 +1,14 @@
 import axios from 'axios'
-import qs from 'qs'
-// import { read } from 'fs';
+// import qs from 'qs'
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-from-urlencode'
 axios.defaults.timeout = 20000
 
 // add a request interceptor(拦截器)
 axios.interceptors.request.use((config) => {
-    if (config.method === 'post') {
-        config.data = qs.stringify(config.data)
-    }
+    // if (config.method === 'post') {
+    //     config.data = qs.stringify(config.data)
+    // }
     return config
 }, (error) => {
     return Promise.reject(error)
@@ -46,9 +45,9 @@ export default async (url = '', params = {}, method = 'get') => {
             })
         })
     } else if (method === 'post'){
-        return new Prommise((resolve, reject)=>{
+        return new Promise((resolve, reject)=>{
             axios.post(url, params).then(response => {
-                resolve(response.data.data)
+                resolve(response.data)
             }, err => {
                 reject(err)
             })
